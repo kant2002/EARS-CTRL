@@ -1,8 +1,8 @@
 // Project version
 if (project.hasProperty('projectVersion')) {
-    version project.projectVersion
+    project.version = project.projVersion
 } else {
-    version GitBasedVersioning.getVersion('0', '1')
+    project.version = "0.1"
 }
 
 // Dependency versions
@@ -22,11 +22,6 @@ ext.artifactsDir = new File(rootDir, 'artifacts')
 
 apply plugin: 'maven-publish'
 apply plugin: 'base'
-
-task wrapper(type: Wrapper) {
-    gradleVersion '3.1'
-    distributionType 'all'
-}
 
 configurations {
     mps
@@ -78,19 +73,19 @@ tasks['ant-check-mps-home'].dependsOn resolveMps
 tasks['ant-clean-and-build'].dependsOn resolveMps, resolveMpsArtifacts
 
 task packageAllScripts(type: Zip, dependsOn: 'ant-clean-and-build') {
-    baseName 'org.iets3.opensource.allScripts'
+    archiveBaseName.set('org.iets3.opensource.allScripts')
     from artifactsDir
     include 'org.iets3.opensource.allScripts.build/**'
 }
 
 task packageOpenSource(type: Zip, dependsOn: 'ant-clean-and-build') {
-    baseName 'org.iets3.opensource'
+    archiveBaseName.set('org.iets3.opensource')
     from artifactsDir
     include 'org.iets3.opensource/**'
 }
 
 task packageTests(type: Zip, dependsOn: 'ant-clean-and-build') {
-    baseName 'org.iets3.opensource.tests'
+    archiveBaseName.set('org.iets3.opensource.tests')
     from new File(artifactsDir, 'org.iets3.opensource.tests')
 }
 
