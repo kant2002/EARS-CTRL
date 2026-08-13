@@ -37,7 +37,7 @@ dependencies {
 repositories {
     for (repoUrl in project.dependencyRepositories) {
         maven {
-            url repoUrl
+            url = repoUrl
             if (project.hasProperty('nexusUsername')) {
                 credentials {
                     username project.nexusUsername
@@ -94,7 +94,7 @@ assemble.dependsOn packageAllScripts, packageOpenSource, packageTests
 publishing {
     repositories {
         maven {
-            url project.publishingRepository
+            url = project.publishingRepository
             if (project.hasProperty('nexusUsername')) {
                 credentials {
                     username project.nexusUsername
@@ -105,18 +105,18 @@ publishing {
     }
     publications {
         allScripts(MavenPublication) {
-            groupId 'org.iets3.opensource'
-            artifactId 'allScripts'
+            groupId = 'org.iets3.opensource'
+            artifactId = 'allScripts'
             artifact packageAllScripts
         }
         openSource(MavenPublication) {
-            groupId 'org.iets3'
-            artifactId 'opensource'
+            groupId = 'org.iets3'
+            artifactId = 'opensource'
             artifact packageOpenSource
         }
         tests(MavenPublication) {
-            groupId 'org.iets3.opensource'
-            artifactId 'tests'
+            groupId = 'org.iets3.opensource'
+            artifactId = 'tests'
             artifact packageTests
         }
     }
